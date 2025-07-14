@@ -9,7 +9,7 @@ public class PeopleService(ApplicationDbContext dbContext)
 {
     public async Task<IEnumerable<Person>> GetAsync()
     {
-        var people = await dbContext.People.AsNoTracking()            
+        var people = await dbContext.People.AsNoTracking()
             //.Include(p => p.City)
             .OrderBy(p => p.FirstName).ThenBy(p => p.LastName)
             //.Select(p => new Person
