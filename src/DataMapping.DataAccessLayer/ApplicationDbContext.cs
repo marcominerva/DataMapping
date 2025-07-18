@@ -1,4 +1,5 @@
 ﻿using DataMapping.DataAccessLayer.Entities;
+using EntityFramework.Exceptions.SqlServer;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataMapping.DataAccessLayer;
@@ -8,6 +9,12 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public virtual DbSet<Person> People { get; set; }
 
     public virtual DbSet<City> Cities { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseExceptionProcessor();
+        base.OnConfiguring(optionsBuilder);
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -34,6 +41,22 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
             entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
         });
+    }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        var entries = ChangeTracker.Entries<City>();
+
+        foreach (var entry in entries)
+        {
+            if (entry.State == EntityState.Deleted)
+            {
+                entry.Entity.IsDeleted = true;
+                entry.State = EntityState.Modified;
+            }
+        }
+
+        return base.SaveChangesAsync(cancellationToken);
     }
 }
 

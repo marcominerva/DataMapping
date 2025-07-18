@@ -41,7 +41,7 @@ public class PeopleService(ApplicationDbContext dbContext)
     }
 }
 
-public static class PersonExtesions
+public static class PersonExtensions
 {
     //public static Person ToModel(this Entities.Person person)
     //{

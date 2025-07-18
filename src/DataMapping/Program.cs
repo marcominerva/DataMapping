@@ -1,9 +1,7 @@
 using DataMapping.BusinessLayer;
 using DataMapping.DataAccessLayer;
 using DataMapping.Shared.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
-using MinimalHelpers.OpenApi;
 using TinyHelpers.AspNetCore.Extensions;
 using TinyHelpers.AspNetCore.OpenApi;
 
@@ -12,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddSqlServer<ApplicationDbContext>(builder.Configuration.GetConnectionString("SqlConnection"));
 
+builder.Services.AddScoped<CityService>();
 builder.Services.AddScoped<PeopleService>();
 
 builder.Services.AddDefaultProblemDetails();
@@ -40,22 +39,6 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.MapGet("/people", async (PeopleService peopleService) =>
-{
-    var people = await peopleService.GetAsync();
-    return TypedResults.Ok(people);
-});
-
-app.MapGet("/people/{id:guid}", async Task<Results<Ok<Person>, NotFound>> (Guid id, PeopleService peopleService) =>
-{
-    var person = await peopleService.GetAsync(id);
-    if (person is null)
-    {
-        return TypedResults.NotFound();
-    }
-
-    return TypedResults.Ok(person);
-})
-.ProducesDefaultProblem(StatusCodes.Status404NotFound);
+app.MapEndpoints();
 
 app.Run();
