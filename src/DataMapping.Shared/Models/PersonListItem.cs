@@ -1,6 +1,6 @@
 ﻿namespace DataMapping.Shared.Models;
 
-public class Person
+public class PersonListItem
 {
     public Guid Id { get; set; }
 
@@ -8,5 +8,5 @@ public class Person
 
     public string LastName { get; set; } = null!;
 
-    public City? City { get; set; }
+    public string? City { get; set; }
 }

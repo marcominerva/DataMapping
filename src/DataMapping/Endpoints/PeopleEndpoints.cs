@@ -10,9 +10,9 @@ public class PeopleEndpoints : IEndpointRouteHandlerBuilder
 {
     public static void MapEndpoints(IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapGet("/api/people", async (PeopleService peopleService) =>
+        endpoints.MapGet("/api/people", async (PeopleService peopleService, int pageIndex = 0, int pageSize = 5, string orderBy = "FirstName") =>
         {
-            var people = await peopleService.GetAsync();
+            var people = await peopleService.GetAsync(pageIndex, pageSize, orderBy);
             return TypedResults.Ok(people);
         });
 
@@ -27,5 +27,11 @@ public class PeopleEndpoints : IEndpointRouteHandlerBuilder
             return TypedResults.Ok(person);
         })
         .ProducesDefaultProblem(StatusCodes.Status404NotFound);
+
+        endpoints.MapPost("/api/people", async (AddPerson person, PeopleService peopleService) =>
+        {
+            var insertedPerson = await peopleService.AddAsync(person);
+            return TypedResults.Created($"/api/people/{insertedPerson.Id}", insertedPerson);
+        });
     }
 }

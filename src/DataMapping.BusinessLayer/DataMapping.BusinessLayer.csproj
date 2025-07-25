@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.6" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DataMapping.DataAccessLayer\DataMapping.DataAccessLayer.csproj" />
     <ProjectReference Include="..\DataMapping.Shared\DataMapping.Shared.csproj" />
   </ItemGroup>

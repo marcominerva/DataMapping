@@ -1,6 +1,6 @@
-﻿namespace DataMapping.DataAccessLayer.Entities;
+﻿namespace DataMapping.Shared.Models;
 
-public class Person
+public class AddPerson
 {
     public Guid Id { get; set; }
 
@@ -9,8 +9,4 @@ public class Person
     public string LastName { get; set; } = null!;
 
     public Guid? CityId { get; set; }
-
-    public DateTime CreationDate { get; set; }
-
-    public City? City { get; set; } = null!;
 }

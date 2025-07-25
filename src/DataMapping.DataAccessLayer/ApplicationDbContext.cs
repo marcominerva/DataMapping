@@ -40,6 +40,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
             entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
+
+            entity.HasQueryFilter(e => !e.IsDeleted);
         });
     }
 

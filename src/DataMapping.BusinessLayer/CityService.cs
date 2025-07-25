@@ -1,7 +1,6 @@
 ﻿using DataMapping.DataAccessLayer;
 using DataMapping.Shared.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Entities = DataMapping.DataAccessLayer.Entities;
 
 namespace DataMapping.BusinessLayer;
