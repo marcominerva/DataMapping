@@ -103,11 +103,11 @@ public static class PersonExtensions
             Id = p.Id,
             FirstName = p.FirstName,
             LastName = p.LastName,
-            City = new City
+            City = p.City != null? new City
             {
                 Id = p.City.Id,
                 Name = p.City.Name
-            }
+            } : null
         });
     }
 }
